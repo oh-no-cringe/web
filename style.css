@@ -458,3 +458,17 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Анимация для скрытия верхней полоски на телефоне ===== */
+@media (max-width: 768px) {
+  .topbar {
+    transition: transform 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+  }
+
+  .topbar.hide-on-scroll {
+    transform: translateY(-100%);
+  }
+}

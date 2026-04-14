@@ -45,3 +45,32 @@ window.addEventListener("load", () => {
     logoPlaceholder.style.display = "flex";
   });
 });
+
+// ===== Скрытие верхней полоски только на телефоне =====
+(function() {
+  // Проверяем, что это мобильное устройство (ширина экрана <= 768px)
+  if (window.innerWidth > 768) return; // на широких экранах ничего не делаем
+
+  const topbar = document.querySelector('.topbar');
+  if (!topbar) return;
+
+  let lastScrollTop = 0;
+  let ticking = false;
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        // Прокрутка вниз и не в самом верху
+        if (scrollTop > lastScrollTop && scrollTop > 50) {
+          topbar.classList.add('hide-on-scroll');
+        } else {
+          topbar.classList.remove('hide-on-scroll');
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
